@@ -1,7 +1,7 @@
 {
-    "name": "project-name",
+    "name": "todo-or-nottodo",
     "version": "1.0.0",
-    "description": "project-description",
+    "description": "A simple todo list application",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
