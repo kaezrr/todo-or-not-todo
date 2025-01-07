@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
-import { addTodo, TodoItem } from './items';
+import { addTodo, TodoItem, updateTodo } from './items';
 
-function getTodoObject(todo, name, i) {
+function getTodoObject(projects, todo, name, i) {
     const div1 = document.createElement('div');
     div1.classList = 'todo-item';
     const input = document.createElement('input');
@@ -10,6 +10,7 @@ function getTodoObject(todo, name, i) {
     input.checked = todo.done;
     input.addEventListener('click', (e) => {
         todo.done = e.target.checked;
+        updateTodo(projects, name, i, todo);
     });
     const h3 = document.createElement('h3');
     h3.textContent = todo.title;
@@ -53,6 +54,7 @@ export function renderProjects(list, projects) {
         let button = document.createElement('button');
         div.classList = 'project-card';
         p.textContent = project;
+        p.classList = 'project-card-name';
         button.textContent = 'delete';
         button.dataset.key = project;
         button.classList = 'del-project';
@@ -72,7 +74,7 @@ export function showProject(projects, name) {
     div.id = 'todo-list';
 
     projects[name].forEach((e, i) => {
-        div.append(getTodoObject(e, name, i));
+        div.append(getTodoObject(projects, e, name, i));
     });
 
     const btn = document.createElement('button');
@@ -106,7 +108,7 @@ export function editTodoFromForm(projects, currProject, index) {
     const about = document.getElementById('about').value;
     const date = document.getElementById('date').value;
     const priority = document.getElementById('priority').value;
-    projects[currProject][index].update(title, about, date, priority);
+    updateTodo(projects, currProject, index, new TodoItem(title, about, date, priority));
 }
 
 export function fillFormFromTodo(projects, currProject, index) {

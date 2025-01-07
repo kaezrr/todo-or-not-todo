@@ -1,5 +1,5 @@
 import './style.css';
-import { addProject, removeProject, addTodo, removeTodo, TodoItem } from './items';
+import { addProject, removeProject, removeTodo } from './items';
 import {
     renderProjects,
     showProject,
@@ -10,6 +10,24 @@ import {
 } from './render';
 
 let projects = {};
+const projectList = document.getElementById('projects');
+if (localStorage.getItem('projects')) {
+    projects = JSON.parse(localStorage.getItem('projects'));
+    for (let project in projects) {
+        for (let todo of projects[project]) {
+            todo.update = function (title, desc, dueDate, priority) {
+                this.title = title;
+                this.desc = desc ? desc : 'No description provided.';
+                this.dueDate = dueDate ? dueDate : new Date();
+                this.priority = priority ? priority : 'None';
+            };
+        }
+    }
+}
+
+renderProjects(projectList, projects);
+showDummyProject();
+
 const form = document.querySelector('form');
 document.getElementById('cancel-form').addEventListener('click', (_) => {
     document.querySelector('dialog').close();
@@ -29,19 +47,15 @@ form.addEventListener('submit', (_) => {
     form.reset();
 });
 
-const projectList = document.getElementById('projects');
-addProject(projects, 'Horror Game');
-addTodo(projects, 'Horror Game', new TodoItem('Lorem', 'FUck off', new Date(), 'low'));
-addTodo(projects, 'Horror Game', new TodoItem('Never', 'FUck off', new Date(), 'nah'));
-renderProjects(projectList, projects);
-showProject(projects, 'Horror Game');
-
 projectList.addEventListener('click', (e) => {
     switch (e.target.className) {
         case 'del-project':
             removeProject(projects, e.target.dataset.key);
             renderProjects(projectList, projects);
             showDummyProject();
+            return;
+        case 'project-card-name':
+            showProject(projects, e.target.textContent);
             return;
         case 'project-card':
             showProject(projects, e.target.querySelector('p').textContent);
