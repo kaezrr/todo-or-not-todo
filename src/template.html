@@ -13,13 +13,8 @@
     </head>
     <body>
         <div class="project-list">
-            <h1>Your Projects</h1>
-            <div id="projects">
-                <div class="project-card">
-                    <p>Todo App</p>
-                    <button>delete</button>
-                </div>
-            </div>
+            <h1 id="project-name">Your Projects</h1>
+            <div id="projects"></div>
             <div class="new-project">
                 <input
                     type="text"
@@ -30,6 +25,32 @@
                 <button>Add Project</button>
             </div>
         </div>
-        <div class="todo-list"></div>
+        <div class="todo-list">
+            <div id="project-display">
+                <h1>Select a project</h1>
+            </div>
+        </div>
+        <dialog class="todo-form" autofocus>
+            <form action="" method="dialog">
+                <div class="title">
+                    <label for="title">TITLE</label>
+                    <input type="text" name="title" id="title" required />
+                </div>
+                <div class="about">
+                    <label for="about">DESCRIPTION</label>
+                    <input type="text" name="about" id="about" />
+                </div>
+                <div class="date">
+                    <label for="date">DUE DATE</label>
+                    <input type="date" name="date" id="date" />
+                </div>
+                <div class="priority">
+                    <label for="priority">PRIORITY</label>
+                    <input type="text" name="priority" id="priority" />
+                </div>
+                <button id="submit-form">Submit</button>
+                <button id="cancel-form">Cancel</button>
+            </form>
+        </dialog>
     </body>
 </html>

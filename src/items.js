@@ -5,21 +5,7 @@ export class TodoItem {
         this.dueDate = dueDate;
         this.priority = priority;
         this.done = false;
-    }
-    changePriority(newPriority) {
-        this.priority = newPriority;
-    }
-    toggleDone() {
-        this.done = !this.done;
-    }
-    changeDesc(newDesc) {
-        this.desc = newDesc;
-    }
-    changeTitle(newTitle) {
-        this.title = newTitle;
-    }
-    changeDate(newDate) {
-        this.dueDate = newDate;
+        this.expanded = false;
     }
 }
 
@@ -45,6 +31,6 @@ export function addTodo(projects, project, todo) {
     projects[project].push(todo);
 }
 
-export function removeTodo(projects, project, todo) {
-    projects[project] = projects[project].filter((e) => e !== todo);
+export function removeTodo(projects, project, index) {
+    projects[project].splice(index, 1);
 }
