@@ -1,18 +1,32 @@
 import './style.css';
 import { addProject, removeProject, addTodo, removeTodo, TodoItem } from './items';
-import { renderProjects, showProject, showDummyProject, addTodoFromForm } from './render';
+import {
+    renderProjects,
+    showProject,
+    showDummyProject,
+    addTodoFromForm,
+    editTodoFromForm,
+    fillFormFromTodo,
+} from './render';
 
 let projects = {};
+const form = document.querySelector('form');
+document.getElementById('cancel-form').addEventListener('click', (_) => {
+    document.querySelector('dialog').close();
+    form.dataset.edit = false;
+    form.reset();
+});
 
-document
-    .getElementById('cancel-form')
-    .addEventListener('click', (_) => document.querySelector('dialog').close());
-
-document.querySelector('form').addEventListener('submit', (_) => {
+form.addEventListener('submit', (_) => {
     const currProject = document.querySelector('#project-display > h1').textContent;
-    addTodoFromForm(projects, currProject);
+    if (form.dataset.edit === 'true') {
+        editTodoFromForm(projects, currProject, form.dataset.index);
+        form.dataset.edit = false;
+    } else {
+        addTodoFromForm(projects, currProject);
+    }
     showProject(projects, currProject);
-    document.querySelector('form').reset();
+    form.reset();
 });
 
 const projectList = document.getElementById('projects');
@@ -58,6 +72,10 @@ document.getElementById('project-display').addEventListener('click', (e) => {
             showProject(projects, target.dataset.project);
             return;
         case 'edit':
+            form.dataset.edit = true;
+            fillFormFromTodo(projects, target.dataset.project, target.dataset.index);
+            document.querySelector('dialog').showModal();
+            form.dataset.index = target.dataset.index;
             return;
     }
 });

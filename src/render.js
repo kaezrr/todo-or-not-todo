@@ -93,20 +93,26 @@ export function showDummyProject() {
     projectDisplay.append(h1);
 }
 
-export function addTodoFromForm(projects) {
+export function addTodoFromForm(projects, currProject) {
     const title = document.getElementById('title').value;
     const about = document.getElementById('about').value;
     const date = document.getElementById('date').value;
     const priority = document.getElementById('priority').value;
-    const currProject = document.querySelector('#project-display > h1').textContent;
-    addTodo(
-        projects,
-        currProject,
-        new TodoItem(
-            title,
-            about ? about : 'No description provided',
-            date ? date : new Date(),
-            priority ? priority : 'N/A'
-        )
-    );
+    addTodo(projects, currProject, new TodoItem(title, about, date, priority));
+}
+
+export function editTodoFromForm(projects, currProject, index) {
+    const title = document.getElementById('title').value;
+    const about = document.getElementById('about').value;
+    const date = document.getElementById('date').value;
+    const priority = document.getElementById('priority').value;
+    projects[currProject][index].update(title, about, date, priority);
+}
+
+export function fillFormFromTodo(projects, currProject, index) {
+    const todo = projects[currProject][index];
+    document.getElementById('title').value = todo.title;
+    document.getElementById('about').value = todo.desc;
+    document.getElementById('date').value = format(todo.dueDate, 'yyyy-MM-dd');
+    document.getElementById('priority').value = todo.priority;
 }

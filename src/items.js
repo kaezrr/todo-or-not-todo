@@ -1,11 +1,18 @@
 export class TodoItem {
     constructor(title, desc, dueDate, priority) {
         this.title = title;
-        this.desc = desc;
-        this.dueDate = dueDate;
-        this.priority = priority;
+        this.desc = desc ? desc : 'No description provided.';
+        this.dueDate = dueDate ? dueDate : new Date();
+        this.priority = priority ? priority : 'None';
         this.done = false;
         this.expanded = false;
+    }
+
+    update(title, desc, dueDate, priority) {
+        this.title = title;
+        this.desc = desc ? desc : 'No description provided.';
+        this.dueDate = dueDate ? dueDate : new Date();
+        this.priority = priority ? priority : 'None';
     }
 }
 
