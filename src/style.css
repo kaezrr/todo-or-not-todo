@@ -180,39 +180,93 @@ button:hover {
 }
 
 dialog {
-    background-color: #7d4e57;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #212d40;
+    border-radius: 10px;
+    padding: 20px;
+    width: 350px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    opacity: 0;
+    transition:
+        transform 0.3s ease-out,
+        opacity 0.3s ease-out;
+}
+
+dialog[open] {
+    transform: scale(1);
+    opacity: 1;
 }
 
 dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 form {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 1fr;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-form > button {
-    justify-self: center;
+form > div {
+    display: flex;
+    flex-direction: column;
 }
 
-form input,
 form label {
-    color: #213555;
-    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input {
+    padding: 8px;
+    border: 2px solid #ccc;
     border-radius: 5px;
-    border: 2px solid #364156;
+    font-size: 1rem;
     background-color: #f5efe7;
+    color: black;
 }
 
 form input:focus {
     outline: none;
-    border-color: #d66853;
+    border-color: #007bff;
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s ease-in-out;
+}
+
+#submit-form {
+    background: #28a745;
+    color: white;
+}
+
+#cancel-form {
+    background: #dc3545;
+    color: white;
+}
+
+#submit-form:hover {
+    background: #218838;
+}
+
+#cancel-form:hover {
+    background: #c82333;
 }
 
 @keyframes fadeIn {
